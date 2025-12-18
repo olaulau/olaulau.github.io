@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Mes projets GitHub</title>
+</head>
+<body>
+<h1>GitHub - olaulau</h1>
+<ul id="repos"></ul>
+
+<script>
+fetch("https://api.github.com/users/olaulau/repos?per_page=100&sort=updated")
+  .then(r => r.json())
+  .then(repos => {
+    const ul = document.getElementById("repos");
+    repos.forEach(r => {
+      if (r.fork) return;
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="${r.html_url}">${r.name}</a> — ${r.description ?? ""}`;
+      ul.appendChild(li);
+    });
+  });
+</script>
+</body>
+</html>
+
